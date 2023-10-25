@@ -138,9 +138,26 @@ int main(int argc, char **argv, char **envp)
 	}
 
 	while (1) {
-		if ((size = read(soc, buf, sizeof(buf))) <= 0) {
+		struct sockaddr_ll from;
+		socklen_t fromLen;
+		memset(&from, 0, sizeof(from));
+
+		fromLen = sizeof(from);
+		if ((size = recvfrom(soc, buf, sizeof(buf), 0,
+				(struct sockaddr *)&from, &fromLen)) <= 0) {
 			perror("read");
 		} else {
+			printf("sll_family=%d\n", from.sll_family);
+			printf("sll_protocol=%d\n", from.sll_protocol);
+			printf("sll_ifindex=%d\n", from.sll_ifindex);
+			printf("sll_hatype=%d\n", from.sll_hatype);
+			printf("sll_pkttype=%d\n", from.sll_pkttype);
+			printf("sll_halen=%d\n", from.sll_halen);
+			printf("sll_addr=%02x:%02x:%02x:%02x:%02x:%02x\n",
+				from.sll_addr[0], from.sll_addr[1], from.sll_addr[2],
+				from.sll_addr[3], from.sll_addr[4], from.sll_addr[5]);
+			printf("Packet[%dbytes]\n", size);
+
 			if (size >= sizeof(struct ether_header)) {
 				PrintEtherHeader((struct ether_header *)buf, stdout);
 			} else {
@@ -152,5 +169,5 @@ int main(int argc, char **argv, char **envp)
 
 	close(soc);
 
-	return 0;	
+	return 0;
 }

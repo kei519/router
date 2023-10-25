@@ -1,8 +1,7 @@
-OBJS=ltest.o
+OBJS=pcap.o analyze.o checksum.o print.o
 SRCS=$(OBJS:%.o=%.c)
-CFLAGS=-g -Wall
-DEFINES=_DEFAULT_SOURCE
+CFLAGS=-g -Wall -D_DEFAULT_SOURCE
 LDLIBS=
-TARGET=ltest
+TARGET=pcap
 $(TARGET):$(OBJS)
-	$(CC) $(CFLAGS) $(CFLAGS) -o $(TARGET) $(OBJS) $(LDLIBS)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $(TARGET) $(OBJS) $(LDLIBS)

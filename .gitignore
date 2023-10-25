@@ -1,0 +1,8 @@
+# executable(no extension) file
+*
+!*/
+!*.*
+!Makefile
+
+# object file
+**/*.o

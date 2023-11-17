@@ -1,6 +1,7 @@
 OBJS=ltest.o
 SRCS=$(OBJS:%.o=%.c)
 CFLAGS=-g -Wall
+DEFINES=_DEFAULT_SOURCE
 LDLIBS=
 TARGET=ltest
 $(TARGET):$(OBJS)
